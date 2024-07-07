@@ -1,3 +1,5 @@
+
+import java.util.Random;
 import java.util.regex.Pattern;
 import java.text.DecimalFormat;
 import java.util.Scanner;
@@ -355,16 +357,119 @@ public class Main {
        }else if (nota >=90  && nota <=100) {
            System.out.println("Su nota es A");
        }
-         */
+
         // Verificador de contraseña
         System.out.println("Ingrese su Contraseña (recuerde que debe contener al menos 1" +
                 " mayuscula una minuscula y un caracter especial");
-       String Contraseña = scanner.next();
+       String contraseña = scanner.next();
         boolean longitud = false;
         boolean mayuscula = false;
         boolean minuscula = false;
-        String caracterEspecial = "";
+        boolean caracter = false;
+        String caracterEspecial = "!@#$%&*()_+=|<>?{}.,;[0-9]";
+       if (longitud == contraseña.length()<9){
+           longitud= true;
+       }
+        for (int i = 0; i < contraseña.length() ; i++) {
+            char f = contraseña.charAt(i);
+            if (Character.isUpperCase(f)){
+                mayuscula= true;
+            } else if (Character.isLowerCase(f)) {
+                minuscula=true;
+            } else if (caracterEspecial.indexOf(f) != -1) {
+                caracter= true;
+            }
+        }
+        boolean validar = (longitud && caracter && mayuscula && minuscula);
+        System.out.println("¿La contraseña es segura?" + validar);
+
+        //Verificador de caracter
+        System.out.println("Ingrese un caracter");
+        String caracterIdentificador = scanner.nextLine();
+        if (caracterIdentificador.length() != 1) {
+            char caracter = caracterIdentificador.charAt(0);
+            caracter = Character.toLowerCase(caracter);
+            if (caracter == 'a' || caracter == 'e' || caracter == 'i' || caracter == 'o' || caracter == 'u') {
+                System.out.println("Este caracter es una vocal.");
+            } else if ((caracter >= 'a' && caracter <= 'z') && !(caracter == 'a' || caracter == 'e' || caracter == 'i' || caracter == 'o' || caracter == 'u')) {
+                System.out.println("Este caracter es una consonante.");
+            } else {
+                System.out.println("Este caracter es un carácter especial.");
+            }
+        }
 
 
+        //Piedra papel o tijera
+        Random random = new Random();
+        System.out.println("Bienvenido a piedra papel o tijera \n" +
+                "seleccione la opccion que desea\n" +
+                "-Piedra\n" +
+                "-Papel\n" +
+                "-Tijera\n");
+        String usuario = scanner.next();
+        usuario = usuario.toLowerCase();
+        String [] opciones = {"piedra","papel", "tijera"};
+        String bot = opciones[random.nextInt(opciones.length)];
+        System.out.println("He elegido "+ bot);
+       if (usuario.equals(bot)){
+           System.out.println("Ha sido un empate");
+       } else if((usuario.equals("piedra")) && (bot.equals("tijera")) || (usuario.equals("tijera")) && (bot.equals("papel")) ||
+               (usuario.equals("papel")) && (bot.equals("piedra"))){
+            System.out.println("Ganaste");
+       }else{
+           System.out.println("Te gané");
+        }
+
+
+        //Calculador de edad
+        System.out.println("Ingrese el año de nacimiento");
+        int nacimiento = scanner.nextInt();
+        System.out.println("Ingrese el mes (formato numerico)");
+        int mes = scanner.nextInt();
+        System.out.println("Ingrese el dia");
+        int dia = scanner.nextInt();
+        int añoActual = 2024;
+        int mesActual = 7;
+        int diaActual = 8;
+        int calcularAños = añoActual-nacimiento;
+        int calcularMeses = mesActual-mes;
+        int calcularDia = diaActual-dia;
+        if (calcularAños<18 && calcularMeses> mesActual && diaActual< dia){
+            System.out.println("sos mayor de edad");
+        }else {
+            System.out.println("Eres menor de edad");
+        }
+
+
+        //Cifrado Cesar
+        System.out.println("ingresa el mensaje");
+        String mensaje = scanner.next();
+        System.out.println("Ingrese el desplazamiento");
+        int desplazamiento = scanner.nextInt();
+        // Cifrado
+        StringBuilder mensajeCifrado = new StringBuilder();
+        for (char caracter : mensaje.toCharArray()) {
+            if (Character.isLetter(caracter)) {
+                char base = Character.isLowerCase(caracter) ? 'a' : 'A';
+                caracter = (char) ((caracter - base + desplazamiento) % 26 + base);
+            }
+            mensajeCifrado.append(caracter);
+        }
+        String cifrado = mensajeCifrado.toString();
+        System.out.println("Mensaje cifrado: " + cifrado);
+        // Descifrado
+        StringBuilder mensajeDescifrado = new StringBuilder();
+        for (char caracter : cifrado.toCharArray()) {
+            if (Character.isLetter(caracter)) {
+                char base = Character.isLowerCase(caracter) ? 'a' : 'A';
+                caracter = (char) ((caracter - base - desplazamiento + 26) % 26 + base);
+            }
+            mensajeDescifrado.append(caracter);
+        }
+        String descifrado = mensajeDescifrado.toString();
+        System.out.println("Mensaje descifrado: " + descifrado);
+
+         */
     }
+
 }
